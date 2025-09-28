@@ -1,0 +1,112 @@
+{% extends "base/main_base.html" %} 
+
+
+
+{% block title %}Book Spot{% endblock %}
+
+{% block side %}
+<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block light">Home</div>
+  </div>
+</a>
+<a href="{{url_for('main.history',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-book"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">History</div>
+  </div>
+</a>
+
+<a href="{{url_for('main.profile',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-circle-user"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Profile</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Summary</div>
+  </div>
+</a>
+{% endblock %}
+
+{% block nav %}<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 light">Home</div>
+  </div> 
+</a>
+<a href="{{url_for('main.history',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-book"></i></div>
+    <div class="ps-4 col-6 grey">History</div>
+  </div>
+</a>
+<a href="{{url_for('main.profile',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-circle-user"></i></div>
+    <div class="ps-4 col-6 grey ">Profile</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 grey ">Summary</div>
+  </div>
+</a>{% endblock %}
+
+
+{% block mainblock %}
+<div class="d-flex flex-column justify-content-center align-items-center"><div class="p-2 mt-lg-3 mb-5 bg2 row "> 
+<form action="{{url_for('main.dashboard',username=current_user.username,role=current_user.role)}}" method="POST" class="p-3 p-sm-5">
+
+   <h3 class="pb-4">Book Spot</h3>
+  <div class="mb-3 row">
+    <label for="lot_location" class="col-sm-4 col-form-label">Location </label>
+    <div class="col-sm-8">
+      <input type="text" disabled class="form-control" id="lot_location" value="{{lot.lot_location}}" name="lot_location">
+    </div>
+  </div>  
+  <input type="hidden" name="lot_id" value="{{lot.id}}">
+  <div class="mb-3 row">
+    <label for="username" class="col-sm-4 col-form-label">Username</label>
+    <div class="col-sm-8">
+      <input type="text" disabled class="form-control" id="username" value="{{current_user.username}}" name="username">
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="name" class="col-sm-4 col-form-label">Name</label>
+    <div class="col-sm-8">
+      <input type="text" disabled class="form-control" id="name" value="{{current_user.name}}" name="user">
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="spot_id" class="col-sm-4 col-form-label">Spot Id</label>
+    <div class="col-sm-8">
+      <input type="text"  class="form-control" list="datalistOptions" id="spot_id" value="{{active_spots[0]}}" name="spot_id">
+      <datalist id="datalistOptions">
+        {% for slot in active_spots %}
+        <option value="{{slot}}">
+        {% endfor %}
+      </datalist>
+    </div>
+  </div>
+  
+  <div class="mb-3 row">
+    <label for="vehicle" class="col-sm-4 col-form-label">Vehicle No</label>
+    <div class="col-sm-8">
+      <input type="text"class="form-control" id="vehicle"  name="vehicle" placeholder="TN00EX1234" required>
+    </div>
+  </div>
+  <div class="d-flex p-4 justify-content-center"><div class="mx-2">
+    <button type="submit" class="btn btn-warning">Book</button></div>
+    <div class="mx-2">
+    <a class="btn btn-primary" href="{{url_for('main.dashboard',username=current_user.username,role=current_user.role)}}" role="button">Back</a></div></div>
+
+</form>
+</div>
+</div>
+{% endblock %}

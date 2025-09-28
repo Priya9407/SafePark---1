@@ -1,0 +1,356 @@
+{% extends "base/main_base.html" %} {% block title2 %} {% block title
+%}Summary{% endblock %} {% endblock %} {% block side %}
+<a
+  href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Home</div>
+  </div>
+</a>
+<a
+  href="{{url_for('main.lots',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-car"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Lots</div>
+  </div>
+</a>
+<a
+  href="{{url_for('main.admin_users',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-users"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Users</div>
+  </div>
+</a>
+<a
+  href="{{url_for('main.search_all',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-search"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Search</div>
+  </div>
+</a>
+<a
+  href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block light">Summary</div>
+  </div>
+</a>
+{% endblock %} {% block nav %}<a
+  href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 grey">Home</div>
+  </div>
+</a>
+<a
+  href="{{url_for('main.lots',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-car"></i></div>
+    <div class="ps-4 col-6 grey">Lots</div>
+  </div>
+</a>
+<a
+  href="{{url_for('main.admin_users',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-users"></i></div>
+    <div class="ps-4 col-6 grey">Users</div>
+  </div>
+</a>
+<a
+  href="{{url_for('main.search_all',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-search"></i></div>
+    <div class="ps-4 col-6 grey">Search</div>
+  </div>
+</a>
+<a
+  href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}"
+>
+  <div class="ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 light">Summary</div>
+  </div> </a
+>{% endblock %} {% block mainblock %}
+<div class="row row-cols-1">
+  <div class="col row row-cols-2 row-cols-md-3 ps-4 p-0 row-cols-xxl-6">
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <a href=""
+          ><div class="card-body dark">
+            <h5 class="card-title">Total Lots</h5>
+            <p class="card-text">{{total}}</p>
+          </div></a
+        >
+      </div>
+    </div>
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <a href=""
+          ><div class="card-body dark">
+            <h5 class="card-title">Amount Earned</h5>
+            <p class="card-text">₹{{amount}}</p>
+          </div></a
+        >
+      </div>
+    </div>
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <a href=""
+          ><div class="dark card-body">
+            <h5 class="card-title">Active Spots</h5>
+            <p class="card-text">{{active}}</p>
+          </div></a
+        >
+      </div>
+    </div>
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <a href=""
+          ><div class="card-body dark">
+            <h5 class="card-title">Occupied Spots</h5>
+            <p class="card-text">{{occupied}}</p>
+          </div></a
+        >
+      </div>
+    </div>
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <a href=""
+          ><div class="card-body dark">
+            <h5 class="card-title">Total Spots</h5>
+            <p class="card-text">{{active+occupied}}</p>
+          </div></a
+        >
+      </div>
+    </div>
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <a href=""
+          ><div class="card-body dark">
+            <h5 class="card-title"> Reservations</h5>
+            <p class="card-text">{{dict2.values()|sum}}</p>
+          </div></a
+        >
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col row row-cols-1 row-cols-xxl-3">
+      <div class="col order-1">
+        <div class="card m-4 mx-1 p-4 p-lg-2">
+          <canvas id="myChart2"></canvas>
+        </div>
+      </div>
+      <div
+        class="col chart-wrapper"
+        style="position: relative; width: 100%; max-width: 330px; margin: auto"
+      >
+        <canvas id="myChart1" width="200" height="200"></canvas>
+        <div class="chart-center-text">
+          <div>{{ occupied }}/{{ active+ occupied }}</div>
+          <small>Occupied Spots</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <div class="flex-grow-1 card m-4 mx-1 p-4 p-lg-2">
+              <canvas id="myChart3"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+</div>
+<div class="row row-cols-1 row-cols-lg-2">
+  <div class="col pt-3">
+    <table class="table table-hover">
+      <thead>
+        <th colspan="100%">Lot Summary</th>
+      </thead>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Location</th>
+          <th
+            scope="col"
+            class="d-none d-sm-table-cell d-lg-none d-xl-table-cell"
+          >
+            Max Spots
+          </th>
+          <th scope="col">Occupied</th>
+          <th scope="col">Active Spots</th>
+          <th scope="col">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for j in lots %}
+        <tr>
+          <th scope="row">{{j.id}}</th>
+          <td>{{j.lot_location}}</td>
+          <td class="d-none d-sm-table-cell d-lg-none d-xl-table-cell">
+            {{j.max_spots}}
+          </td>
+          <td>
+            {{ j.spots | selectattr('status', 'equalto', 'occupied') | list |
+            length }}
+          </td>
+          <td>
+            {{ j.spots | selectattr('status', 'equalto', 'active') | list |
+            length }}
+          </td>
+          <td>₹{{j.total_price}}</td>
+        </tr>
+        {% endfor %}
+      
+      </tbody>
+    </table>
+  </div>
+  <div class="col pt-3">
+    <table class="table table-hover">
+      <thead>
+        <th colspan="100%"> Reservations</th>
+      </thead>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Spot ID</th>
+          <th scope="col">User ID</th>
+          <th scope="col">Vehicle No</th>
+          <th
+            scope="col"
+            class="d-none d-sm-table-cell d-lg-none d-xl-table-cell"
+          >
+            Start time
+          </th>
+          <th class="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in reservations %}
+        <tr>
+          <th scope="row">{{i.id}}</th>
+          <td>{{i.spot_id}}</td>
+          <td>{{i.customer_id}}</td>
+          <td>{{i.vehicle_no}}</td>
+          <td class="d-none d-sm-table-cell d-lg-none d-xl-table-cell">
+            {{i.start_time.strftime('%d %b %Y, %I:%M %p') }}
+          </td>
+          <td>{{i.status}}</td>
+        </tr>
+        {% endfor %}
+       
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %} {% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const dict={{ dict | tojson }}
+  const dict2={{ dict2 | tojson }}
+
+  const labels = Object.keys(dict);
+  const values = Object.values(dict);
+  const reservations=Object.values(dict2)
+
+  const ctx2 = document.getElementById('myChart2');
+  const ctx3 = document.getElementById('myChart3');
+
+  const ctx = document.getElementById('myChart1');
+
+  new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Income (₹)',
+        data: values,
+        borderColor: '#1f2937',
+        backgroundColor: 'rgba(31, 41, 55, 0.3)',
+        borderWidth: 2,
+        tension: 0.3,
+        fill: true
+      }]
+    },
+     options: {
+      plugins: {
+        tooltip: {
+      enabled: true,
+      mode: 'nearest',
+      intersect: false
+    },
+        legend: { labels: { color: '#1f2937' } }
+      },
+      scales: {
+        x: { ticks: { color: '#1f2937' } },
+        y: { ticks: { color: '#1f2937' } }
+      }
+    }
+  });
+  new Chart(ctx3, {
+    type: 'bar',
+    data: {
+      labels:labels,
+      datasets: [{
+        label: 'Number of Reservations',
+        data: reservations,
+         backgroundColor: '#ff7f50',
+        borderColor: '#ff7f50',
+        borderWidth: 1
+      }]
+    },
+     options: {
+      plugins: {
+        tooltip: {
+      enabled: true
+    },
+        legend: { labels: { color: '#1f2937' } }
+      },
+      scales: {
+        x: { ticks: { color: '#1f2937' } },
+        y: { ticks: { color: '#ff7f50' } }
+      }
+    }
+  });
+
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+         labels: ['Active', 'Occupied'],
+      datasets: [{
+        label:'Spot Status',
+        data:  [{{active}},{{occupied}}],
+         backgroundColor: ['#28a745', 'orange'],
+        borderColor:['#28a745', 'orange'],
+        borderWidth: 1
+      }]
+    },
+     options: {
+      radius:'90%',
+       cutout: '90%',
+
+      plugins: {
+        tooltip: {
+      enabled: true
+    },legend: { display: false },
+
+      },
+
+    }
+  });
+</script>
+
+{% endblock %}

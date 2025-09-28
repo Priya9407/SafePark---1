@@ -1,0 +1,63 @@
+{% extends "base/base.html" %} {% block title %}Login{% endblock %} {% block
+head_extra %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/home.css') }}"
+/>
+{% endblock %} {% block body %}
+<div class="d-flex flex-column justify-content-center align-items-center container-fluid"><div class="p-4 pt-0 bg2 row">
+  <div class="col align-self-center text-center">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}  {% endif %}
+      {% endwith %}<nav aria-label="login and register">
+    <div class="">
+    <ul class="p-4 pb-2 pagination">
+      <li class="col page-item p-2 active">
+        <a class="text-center active-btn light" href="{{url_for('main.login')}}">Login</a>
+      </li>
+      <li class="col page-item">
+        <a class="page-link unactive-btn text-center dark" href="{{url_for('main.register')}}">Register</a>
+      </li>
+    </ul></nav></div>
+    <!-- <div class="alert text-center">{{msg}}</div> -->
+  <div class="p-5 pt-0 pb-0"> <form action="{{url_for('main.login')}}" method="POST">
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-5 col-form-label dark"
+        >Username / Email
+      </label>
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          id="staticEmail"
+          name="username" required
+        />
+      </div>
+    </div>
+    <div class="mb-3 mb-sm-0 row">
+      <label for="inputPassword" class="dark col-sm-5 col-form-label"
+        >Password
+      </label>
+      <div class="col-sm-7 ">
+        <input
+          type="password"
+          class="form-control"
+          id="inputPassword"
+          name="password" required
+        />
+      </div>
+    </div>
+  </div><div class="p-0 pb-2 d-flex justify-content-center">
+  <button class="submit btn-warning btn align-self-center" type="submit">Login</button></div>
+  <div class="dark text-center">Don't have account?<a href="{{url_for('main.register')}}" class="p-2">Register</a></div>
+
+  </form></div></div></div>
+
+
+{% endblock %}

@@ -1,0 +1,220 @@
+{% extends "base/main_base.html" %} 
+
+{% block title %}
+
+{% block title2 %}Summary{% endblock %}{% endblock %}
+
+{% block side %}
+<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Home</div>
+  </div>
+</a>
+<a href="{{url_for('main.history',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-book"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">History</div>
+  </div>
+</a>
+
+<a href="{{url_for('main.profile',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-circle-user"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Profile</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block light">Summary</div>
+  </div>
+</a>
+{% endblock %}
+
+{% block nav %}<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 grey">Home</div>
+  </div> 
+</a>
+<a href="{{url_for('main.history',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-book"></i></div>
+    <div class="ps-4 col-6 grey">History</div>
+  </div>
+</a>
+<a href="{{url_for('main.profile',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-circle-user"></i></div>
+    <div class="ps-4 col-6 grey ">Profile</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 light">Summary</div>
+  </div>
+</a>{% endblock %}
+{% block mainblock %}
+<div class="row row-cols-1">
+  <div class="col row row-cols-2 row-cols-lg-4 ps-4 p-0">
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <div class="card-body dark">
+            <h5 class="card-title">Amount Spent</h5>
+            <p class="card-text">
+₹{{total}}</p>
+          </div>
+      </div>
+    </div>
+
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <div class="dark card-body">
+            <h5 class="card-title">Released Spots</h5>
+            <p class="card-text">{{released}}</p>
+          </div>
+      </div>
+    </div>
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <div class="card-body dark">
+            <h5 class="card-title">Reserved Spots</h5>
+            <p class="card-text">{{occupied}}</p>
+          </div>
+      </div>
+    </div>
+    <div class="p-1 col">
+      <div class="card pt-4 pb-4 m-2">
+        <div class="card-body dark">
+            <h5 class="card-title">Total Bookings</h5>
+            <p class="card-text">{{released+occupied}}</p>
+          </div>
+      </div>
+    </div>
+  </div>
+   <div class="col row row-cols-1 row-cols-lg-2">
+     <div
+        class="col chart-wrapper"
+        style="position: relative; width: 100%; max-width: 330px; margin: auto"
+      >
+        <canvas id="myChart1" width="200" height="200"></canvas>
+        <div class="chart-center-text">
+          <div>{{occupied}}/{{released+occupied}}</div>
+          <small>Occupied Reservations</small>
+        </div>
+      </div>
+
+      <div class="card m-4 mx-1 p-4 p-lg-2">
+          <canvas id="myChart2"></canvas>
+        </div>
+   </div>
+
+</div>
+
+
+   
+
+
+{% endblock %} {% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const lot_reservation_count={{ lot_reservation_count|tojson}}
+  const labels = Object.keys(lot_reservation_count);
+  const reservations=Object.values(lot_reservation_count)
+
+  const ctx2 = document.getElementById('myChart2');
+
+  const ctx = document.getElementById('myChart1');
+
+new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: labels,
+    datasets: [{
+      data: reservations, 
+      backgroundColor: '#154c79',
+      borderColor: '#154c79',
+      borderWidth: 1
+    }]
+  },
+  options: {
+    plugins: {
+      tooltip: {
+        enabled: true
+      },
+      legend: {
+ display:false
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#1f2937'
+        },
+        title: {
+          display: true,
+          text: 'Parking Lot',
+          color: '#154c79',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        }
+      },
+      y: {
+  beginAtZero: true,
+  ticks: {
+    stepSize: 1,
+    callback: function(value) {
+      // Remove .0 if it's a whole number
+      return Number.isInteger(value) ? value : value.toFixed(0);
+    },
+    color: '#154c79'
+  },
+  title: {
+    display: true,
+    text: 'Number of Reservations',
+    color: '#154c79',
+    font: {
+      size: 14,
+      weight: 'bold'
+    }
+  }
+}
+
+    }
+  }
+});
+
+
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+         labels: ['Released', 'Occupied'],
+      datasets: [{
+        label:'Count',
+        data:  [{{released}},{{occupied}}],
+         backgroundColor: ['#28a745', 'orange'],
+        borderColor:['#28a745', 'orange'],
+        borderWidth: 1
+      }]
+    },
+     options: {
+      radius:'90%',
+       cutout: '90%',
+
+      plugins: {
+        tooltip: {
+      enabled: true
+    },legend: { display: false },
+
+      },
+
+    }
+  });
+</script>
+
+{% endblock %}

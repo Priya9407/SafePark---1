@@ -1,0 +1,113 @@
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+:root{
+  --dark-main:#1E2B48;
+  --bg:#ECF0F1;
+  --light-main:	#ffffff;
+  --border-radius:0.3rem;
+  --orange:#f39c12;
+}
+*{
+  color:var(--light-main);
+  font-weight: "Roboto",sans-serif;
+}
+.title{ 
+  font-size: 200%;
+  font-family: "Poppins",sans-serif;
+  width:75vw;
+}
+.container-fluid,.container-fluid1{
+  height:100vh;
+  background: var(--dark-main);
+}
+.bg{
+  background: #fafafa;
+  height:70vh;
+  width:75vw;
+  min-height: 410px;
+}
+.dark{
+  color: var(--dark-main);
+}
+.main-h{
+  font-size: min(5vw,35px);
+  line-height: min(2.7rem,5vw);
+  font-family: "Poppins",sans-serif;
+  font-weight: 500;
+}
+img{
+  width:35vw;
+  height:35vw;
+  max-width: 400px;
+  max-height: 400px;
+}
+.btn-primary{
+  background: var(--dark-main);
+}
+.btn-primary:hover{
+  background: #334671;
+}
+.btn{
+  display: block;
+  width: 10rem;
+  color: #fafafa;
+  border: none;
+  margin:0.2rem;
+}
+.btn-warning{
+  background: var(--orange);
+}
+.btn-warning:hover{
+  background: #ca881d;
+  color: white;
+}
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 2px 3px #5671af;
+  border-color: #5671af;
+}
+.bg2{
+  background: #fafafa;
+  width:75vw;
+  min-height: 410px;
+  max-width: 580px;
+}
+.light{
+  color:var(--bg);
+}
+.active{
+  background: var(--dark-main);
+  border-radius: 5px;
+}
+.active:hover{
+  background-color: #374567;
+  color: var(--light-main);
+}
+.active:active{
+  box-shadow: 0 1px 8px var(--dark-main);
+}
+.unactive-btn:hover{
+  background: var(--bg);
+  color: #334671;
+}
+.unactive-btn:active{
+  box-shadow: 0 1px 8px var(--dark-main);
+}
+a{
+  text-decoration: none;
+}
+.submit{
+  margin: 0;
+  width:8rem;
+}
+.pagination{
+  border-radius: 5px;
+}
+@media (max-width: 576px) { 
+  .container-fluid1{
+    height:140vh;
+  }
+  .bg3{
+  width:75vw;
+  min-height: 120vh;
+  max-width: 600px;
+}} 

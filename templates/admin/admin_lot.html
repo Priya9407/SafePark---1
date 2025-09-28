@@ -1,0 +1,141 @@
+{% extends "base/main_base.html" %} 
+
+ {% block title2 %}
+ {% block title %}Parking Lots{% endblock %}
+ 
+{% endblock %}
+ 
+ 
+ {% block side %}
+ <a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+     <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+     <div class="ps-4 col-6 d-sm-none d-lg-block grey">Home</div>
+   </div>
+ </a>
+ <a href="{{url_for('main.lots',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row active">
+     <div class="col-1"><i class="fa-solid icon fa-car"></i></div>
+     <div class="ps-4 col-6 d-sm-none d-lg-block light">Lots</div>
+   </div>
+ </a>
+ <a href="{{url_for('main.admin_users',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+     <div class="col-1"><i class="fa-solid icon fa-users"></i></div>
+     <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Users</div>
+   </div>
+ </a>
+ <a href="{{url_for('main.search_all',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+     <div class="col-1"><i class="fa-solid icon fa-search"></i></div>
+     <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Search</div>
+   </div>
+ </a>
+ <a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+     <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+     <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Summary</div>
+   </div>
+ </a>
+ {% endblock %}
+ 
+ 
+ 
+ 
+ 
+ 
+ {% block nav %}<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-4 p-2 row inactive">
+     <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+     <div class="ps-4 col-6 grey">Home</div>
+   </div>
+ </a>
+ <a href="{{url_for('main.view_lot',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-4 p-2 my-1 row active">
+     <div class="col-1"><i class="fa-solid icon fa-car"></i></div>
+     <div class="ps-4 col-6 light">Lots</div>
+   </div>
+ </a>
+ <a href="{{url_for('main.admin_users',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-4 p-2 row inactive">
+     <div class="col-1"><i class="fa-solid icon fa-users"></i></div>
+     <div class="ps-4 col-6 grey ">Users</div>
+   </div>
+ </a>
+ <a href="{{url_for('main.search_all',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-4 p-2 my-1 row inactive">
+     <div class="col-1"><i class="fa-solid icon fa-search"></i></div>
+     <div class="ps-4 col-6 grey ">Search</div>
+   </div>
+ </a>
+ <a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+   <div class="ps-4 p-2 row inactive">
+     <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+     <div class="ps-4 col-6 grey ">Summary</div>
+   </div>
+ </a>{% endblock %}
+ 
+ 
+ 
+ {% block search %}<div class="ps-3 pe-3">
+  <form action="{{url_for('main.search',role=current_user.role, username=current_user.username)}}" method="POST" >
+    <div class="input-group mb-3">
+      <button class="btn btn-primary" value="Search" type="submit"><i class="fa fa-search" ></i></button>
+      <input type="text" class="form-control" placeholder="Search..." name="search">
+    </div>
+    </form>
+ </div>
+ 
+ {% endblock %}
+ 
+ 
+ 
+ 
+ {% block mainblock %}
+
+ {% if search %}
+{% if lots %} Showing results for <span style="color: blue;">"{{q}}"</span><br>
+<a href="{{url_for('main.lots',role=current_user.role, username=current_user.username)}}" class="btn mb-4  btn-outline-secondary" style="width:10rem">Clear Search</a>{% else %}
+No lots found for <span style="color: blue;">"{{q}}"</span>.<br>
+<a href="{{url_for('main.lots',role=current_user.role, username=current_user.username)}}" class="btn mb-4  btn-outline-secondary" style="width:10rem">Clear Search</a
+{% endif %}{% endif %}
+<div class="row ps-4 p-0 pb-3">
+  <div class="col row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+
+
+    {% if search==0 %}
+    <div class="col  p-1"><a href="{{url_for('main.new_lot',role=current_user.role, username=current_user.username)}}">
+    <div class="plus-card d-flex justify-content-center card align-items-center"><div class="plus">+</div></div></a></div>
+    
+      {% endif %}
+
+{% for lot in lots %}
+<div class="col p-1 ">
+<div class="card">
+  
+  <div class="card-body">
+    <a href="{{url_for('main.view_lot',current_lot=lot.id,role=current_user.role, username=current_user.username)}}" class="dark">
+     <div class="d-flex flex-row"> <div class="flex-grow-1">
+   <h5 class="card-title">{{lot.lot_location}}</h5></div><div class="">{% if lot.spots | selectattr('status', 'equalto', 'occupied') | list | length==0 %}
+    <form method="POST" action="{{ url_for('main.delete_lot', lot_id=lot.id, role=current_user.role, username=current_user.username) }}" onsubmit="return confirm('Are you sure you want to delete this lot?');" style="display:inline;">
+  <button type="submit" class="btn-outline-danger btn p-0" style="width:1rem"><i class="fa fa-xmark"></i></button>
+</form>{% endif %}</div></div><p class="card-text">{{lot.address}}<br>{{lot.pin_code}}</p></a></div>
+
+
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><div class="row"><div class="col-7">Max Spots</div>
+      <div class="col-5">{{lot.max_spots}}</div></div></li>
+    <li class="list-group-item"><div class="row"><div class="col-7">Occupied</div>
+      <div class="col-5">{{ lot.spots | selectattr('status', 'equalto', 'occupied') | list | length }}</div></div></li>
+    <li class="list-group-item"><div class="row"><div class="col-7">Price</div>
+    <div class="col-5">{{lot.price}}</div></div></li>
+  </ul>
+  <div class="card-body">
+    <a href="{{url_for('main.edit_lot',current_lot=lot.id,role=current_user.role, username=current_user.username)}}" class=" btn btn-warning">Edit</a>
+    <a href="{{ url_for('main.view_lot', current_lot=lot.id,role=current_user.role, username=current_user.username) }}" class="btn-success btn">View</a>
+</div></div></div>
+{% endfor %}
+ 
+</div></div>
+{% endblock %}

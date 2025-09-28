@@ -1,0 +1,126 @@
+{% extends "base/main_base.html" %} 
+
+{% block title %}
+Edit Profile{% endblock %}
+
+{% block side %}
+<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Home</div>
+  </div>
+</a>
+<a href="{{url_for('main.lots',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-car"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Lots</div>
+  </div>
+</a>
+<a href="{{url_for('main.admin_users',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-users"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Users</div>
+  </div>
+</a>
+<a href="{{url_for('main.search_all',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-search"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Search</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Summary</div>
+  </div>
+</a>
+{% endblock %}
+
+
+
+
+
+
+{% block nav %}<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 grey">Home</div>
+  </div>
+</a>
+<a href="{{url_for('main.lots',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-car"></i></div>
+    <div class="ps-4 col-6 grey">Lots</div>
+  </div>
+</a>
+<a href="{{url_for('main.admin_users',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-users"></i></div>
+    <div class="ps-4 col-6 grey ">Users</div>
+  </div>
+</a>
+<a href="{{url_for('main.search_all',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-search"></i></div>
+    <div class="ps-4 col-6 grey">Search</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 grey ">Summary</div>
+  </div>
+</a>{% endblock %}
+
+
+{% block mainblock %}
+<div class="d-flex flex-column justify-content-center align-items-center mb-4"><div class="p-4 mt-lg-4 mb-5 bg2 row "> 
+<form class="p-3 p-sm-5" action="{{url_for('main.edit_profile',role=current_user.role, username=current_user.username)}}" method="post">
+  <h3 class="pb-4">Edit Profile</h3>
+  <div class="mb-3 row">
+    <label for="staticEmail" class="col-sm-5 dark dark col-form-label">Full name
+    </label>
+    <div class="col-sm-7">
+      <input type="text" class="form-control" id="staticEmail" name="name"  value="{{current_user.name}}"/>
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="inputPassword" class="col-sm-5 dark col-form-label">Username
+    </label>
+    <div class="col-sm-7">
+      <input type="text" class="form-control" id="inputPassword" name="username"  value="{{current_user.username}}"/>
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="Email" class="col-sm-5 dark col-form-label">Email Id
+    </label>
+    <div class="col-sm-7">
+      <input type="text" class="form-control" id="Email" name="email"  value="{{current_user.email}}"/>
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="address" class="col-sm-5 dark col-form-label">Address
+    </label>
+    <div class="col-sm-7">
+      <textarea type="textarea" rows="3" class="form-control" id="address" name="address"  />{{ current_user.address }}
+    </textarea>
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="pincode" class="col-sm-5 dark col-form-label">Pincode
+    </label>
+    <div class="col-sm-7">
+      <input type="text" class="form-control" id="pincode" name="pincode"  value="{{current_user.pin_code}}"/>
+    </div></div>
+  
+  
+<div class="pt-4 pb-2 d-flex justify-content-center">
+
+  <button class="submit btn-warning btn align-self-center me-2" type="submit">Update</button>
+<a href="{{url_for('main.profile',role=current_user.role, username=current_user.username)}}" class="submit btn-primary btn align-self-center">Back</a></div>
+</form>
+</div></div>
+
+
+{% endblock %}
+

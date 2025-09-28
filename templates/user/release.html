@@ -1,0 +1,136 @@
+{% extends "base/main_base.html" %} 
+
+{% block title %}
+Release Spot{% endblock %}
+
+{% block side %}
+<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block light">Home</div>
+  </div>
+</a>
+<a href="{{url_for('main.history',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-book"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">History</div>
+  </div>
+</a>
+
+<a href="{{url_for('main.profile',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-circle-user"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Profile</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Summary</div>
+  </div>
+</a>
+{% endblock %}
+
+{% block nav %}<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 light">Home</div>
+  </div> 
+</a>
+<a href="{{url_for('main.history',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-book"></i></div>
+    <div class="ps-4 col-6 grey">History</div>
+  </div>
+</a>
+<a href="{{url_for('main.profile',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-circle-user"></i></div>
+    <div class="ps-4 col-6 grey ">Profile</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 grey ">Summary</div>
+  </div>
+</a>{% endblock %}
+
+{% block mainblock %}
+<div class="d-flex flex-column justify-content-center align-items-center"><div class="p-2 mt-lg-3 mb-5 bg2 row "> 
+<form action="{{url_for('main.history',username=current_user.username,role=current_user.role,reservation=reservation.id,price=price)}}" method="POST" class="p-3 p-sm-5">
+<h3 class="pb-4">Release Spot</h3>
+  <div class="mb-3 row">
+    <label for="lot_id" class="col-sm-4 col-form-label">Lot Location </label>
+    <div class="col-sm-8">
+      <input type="text" readonly class="form-control" id="lot_id" value="{{lot.lot_location}}" name="lot_id" readonly>
+    </div>
+  </div>
+  
+  <div class="mb-3 row">
+    <label for="spot_id" class="col-sm-4 col-form-label">Spot Id</label>
+    <div class="col-sm-8">
+      <input type="text"  class="form-control" id="spot_id" value="{{reservation.spot_id}}" name="spot_id" readonly>
+     
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="name" class="col-sm-4 col-form-label">Name</label>
+    <div class="col-sm-8">
+      <input type="text" readonly class="form-control" id="name" value="{{user.name}}" name="user" readonly>
+    </div>
+  </div>
+  
+  <div class="mb-3 row">
+    <label for="vehicle" class="col-sm-4 col-form-label">Vehicle No</label>
+    <div class="col-sm-8">
+      <input type="text"class="form-control" id="vehicle"  name="vehicle" value="{{reservation.vehicle_no}}" readonly>
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="price" class="col-sm-4 col-form-label">Price per hour</label>
+    <div class="col-sm-8">
+      <input type="text"class="form-control" id="price"  name="price" value="Rs. {{lot.price}}" readonly>
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="starttime" class="col-sm-4 col-form-label">Start Time</label>
+    <div class="col-sm-8">
+      <input type="text"class="form-control" id="starttime"  name="starttime" value="{{reservation.start_time.strftime('%b %d %Y, %I:%M %p') }}" readonly>
+    
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="endtime" class="col-sm-4 col-form-label">End Time</label>
+    <div class="col-sm-8">
+          <input type="text" class="form-control" id="endtime" name="endtime" readonly>
+
+    
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="totalprice" class="col-sm-4 col-form-label">Total Price</label>
+    <div class="col-sm-8">
+      <input type="text"class="form-control" id="totalprice"  name="totalprice" value="Rs. {{price}}" readonly>
+    </div>
+  </div>
+<div class="pt-4 pb-2 d-flex justify-content-center">
+
+    <button type="submit" class="btn btn-danger me-2" style="width:5rem;">Release</button>
+    
+    <a class="btn btn-length btn-primary" href="{{url_for('main.history',username=current_user.username,role=current_user.role)}}" role="button">Back</a></div>
+
+</form>
+</div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let now = new Date();
+    let options = { day: "2-digit", month: "short", year: "numeric", 
+                    hour: "2-digit", minute: "2-digit", hour12: true };
+    document.getElementById("endtime").value = now.toLocaleString("en-US", options);
+  });
+</script>
+{% endblock %}

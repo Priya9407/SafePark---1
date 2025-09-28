@@ -1,0 +1,159 @@
+{% extends "base/main_base.html" %} 
+
+{% block title2 %}
+{% block title %}View Lot{% endblock %}
+
+{% endblock %}
+
+
+{% block side %}
+<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Home</div>
+  </div>
+</a>
+<a href="{{url_for('main.lots',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-car"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block light">Lots</div>
+  </div>
+</a>
+<a href="{{url_for('main.admin_users',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-users"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Users</div>
+  </div>
+</a>
+<a href="{{url_for('main.search_all',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-search"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Search</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Summary</div>
+  </div>
+</a>
+{% endblock %}
+
+
+
+
+
+
+{% block nav %}<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 grey">Home</div>
+  </div>
+</a>
+<a href="{{url_for('main.view_lot',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row active">
+    <div class="col-1"><i class="fa-solid icon fa-car"></i></div>
+    <div class="ps-4 col-6 light">Lots</div>
+  </div>
+</a>
+<a href="{{url_for('main.admin_users',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-users"></i></div>
+    <div class="ps-4 col-6 grey ">Users</div>
+  </div>
+</a>
+<a href="{{url_for('main.search_all',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-search"></i></div>
+    <div class="ps-4 col-6 grey ">Search</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 grey ">Summary</div>
+  </div>
+</a>{% endblock %}
+
+{% block mainblock %}
+<div class="d-flex justify-content-center align-items-center pb-5">
+  <div class="white-bg mt-lg-5 pt-5 pb-5 ps-3 pe-3 pager text-center">
+
+    <h3 class="pb-4 dark">{{ lot.lot_location }}</h3>
+
+    <div class="pb-4 d-flex justify-content-between px-3">
+      {% if lot.id != first_lot_id.id %}
+        <a href="{{ url_for('main.view_lot', current_lot=lot.id - 1,role=current_user.role, username=current_user.username) }}"
+           class="btn btn-orange">
+          <i class="fa-solid fa-chevron-left"></i> Previous
+        </a>
+      {% else %}
+        <span></span>
+      {% endif %}
+
+      {% if lot.id != last_lot_id.id %}
+        <a href="{{ url_for('main.view_lot', current_lot=lot.id + 1,role=current_user.role, username=current_user.username) }}"
+           class="btn btn-orange">
+         <i class="fa-solid fa-chevron-right"></i><br> Next 
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        {% set total_spots = lot.max_spots %}
+        {% for spot in range(1, total_spots + 1) %}
+          {% set spot_id = 'P' ~ lot.id ~ 'S' ~ spot %}
+          <div class="col">
+            <div class="card shadow-sm h-100">
+              <div class="card-body card-body1  d-flex align-items-center">
+
+                <div class="me-4" style="font-size: 2.5rem;">
+                  {% if spot_id in active_spots %}
+                    🅿️
+                  {% elif spot_id in occupied %}
+                    🚗
+                  {% elif spot_id in deleted %}
+                    ❌
+                  {% endif %}
+                </div>
+
+
+                <div class="text-start">
+                  <h5 class="card-title mb-1">Spot {{ spot }}</h5>
+                  {% if spot_id in active_spots %}
+                    <p class="text-success mb-0">Available</p>
+                  {% elif spot_id in occupied %}
+                    <p class="text-warning mb-0">Occupied</p>
+                  {% elif spot_id in deleted %}<p class="text-danger mb-0">Deleted</p> 
+                    
+    
+                  {% else %}
+                    <p class="text-muted mb-0">Unknown</p>
+                  {% endif %}
+                </div>
+
+                {% if spot_id not in deleted %}
+                  <a href="{{ url_for('main.view_spot', current_spot=spot_id, current_lot=lot.id,role=current_user.role, username=current_user.username) }}"
+                     class="ms-auto btn btn-sm btn-outline-secondary">
+                    View
+                  </a>
+                  {% else %}
+                   <a href="{{ url_for('main.readd_spot', spot_id=spot_id, lot_id=lot.id, role=current_user.role, username=current_user.username) }}"
+                     class="ms-auto btn btn-sm btn-outline-secondary">
+                     Add
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    
+ <div class="pt-4 p-2"><a href="{{url_for('main.lots',role=current_user.role,username=current_user.username)}}" class="btn btn-danger">Back</a></div>
+
+  </div>
+</div>
+{% endblock %}

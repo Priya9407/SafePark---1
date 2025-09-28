@@ -1,0 +1,87 @@
+{% extends "base/base.html" %} {% block title %}Login{% endblock %} {% block
+head_extra %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/home.css') }}"
+/>
+{% endblock %} {% block body %}
+
+<div class="d-flex flex-column justify-content-center align-items-center container-fluid1"><div class="p-4  pt-0 bg2 row"> 
+   {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+  <div class="col align-self-center text-center"> <nav aria-label="login and register">
+    <div>
+    <ul class="p-4 pagination">
+      <li class="col page-item">
+        <a class="page-link unactive-btn text-center dark" href="{{url_for('main.login')}}">Login</a>
+      </li>
+      <li class="col page-item p-2 active">
+        <a class="text-center active-btn light" href="{{url_for('main.register')}}">Register</a>
+      </l i>
+      
+    </ul></nav></div>
+  <div class="p-5 pt-0 pb-0"> <form action="{{url_for('main.register')}}" method="POST">
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-5 dark dark col-form-label">Full name
+      </label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="staticEmail" name="name" required/>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="inputPassword" class="col-sm-5 dark col-form-label">Username
+      </label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputPassword" name="username" required />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="Email" class="col-sm-5 dark col-form-label">Email Id
+      </label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="Email" name="email" required/>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="address" class="col-sm-5 dark col-form-label">Address
+      </label>
+      <div class="col-sm-7">
+        <textarea type="textarea" rows="3" class="form-control" id="address" name="address" />
+      </textarea>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="pincode" class="col-sm-5 dark col-form-label">Pincode
+      </label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="pincode" name="pincode" required/>
+      </div></div>
+    <div class="mb-3 row">
+      <label for="password" class="col-sm-5 dark col-form-label">Password
+      </label>
+      <div class="col-sm-7">
+        <input type="password" class="form-control"  required id="password" name="password" />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="passworda" class="col-sm-5 dark col-form-label">Password again
+      </label>
+      <div class="col-sm-7">
+        <input type="password" class="form-control" id="passworda"  required name="pwda" />
+      </div>
+  </div><div class="pt-4 pb-3 d-flex justify-content-center">
+  <button class="submit btn-warning btn align-self-center " type="submit">Register</button></div>
+  <div class="dark text-center pb-0">Already have an account?<a href="{{url_for('main.login')}}" class="p-2">Login</a></div>  <div class="text-center" style="color:rgb(231, 120, 9)">No registration required for admin</div>
+  </form></div>
+
+</div></div>
+
+{% endblock %}

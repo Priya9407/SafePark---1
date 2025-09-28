@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+
+{% block title %}SafePark{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+  <div class="p-3 title">SafePark</div>
+
+  <div class="bg mb-5 row p-4 row-cols-1 row-cols-md-2">
+    
+    <div class="col d-flex flex-column align-items-center justify-content-center"><img src="/static/images/icon.png" class="img" alt=""></div>
+  
+  <div class="col dark pb-2   text-md-start text-center align-self-center d-flex flex-column justify-content-center">
+    <div class=" main-h dark">Find & Book Parking in Seconds</div>  <div class="dark p-2 pe-5">Real-time parking availability in your city. Reserve a spot before you arrive.</div> <div class="align-self-center pt-3"><a class="btn btn-warning" href="{{url_for('main.login')}}" role="button">Login</a></div>
+    <div class="align-self-center mt-0"><a class="btn btn-primary"  href="{{url_for('main.register')}}" role="button">Register</a></div></div> 
+
+
+</div>
+ 
+</div>
+
+
+{% endblock %}
+
+
+
+ 

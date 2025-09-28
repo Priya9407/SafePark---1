@@ -1,0 +1,117 @@
+{% extends "base/main_base.html" %} 
+
+{% block title %}
+
+{% block title2 %}History{% endblock %}{% endblock %}
+
+{% block side %}
+<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey">Home</div>
+  </div>
+</a>
+<a href="{{url_for('main.history',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row active">
+    <div class="col-1"><i class="fa-solid icon fa-book"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block light">History</div>
+  </div>
+</a>
+
+<a href="{{url_for('main.profile',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-circle-user"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Profile</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-sm-3 my-1 ps-lg-4 ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 d-sm-none d-lg-block grey ">Summary</div>
+  </div>
+</a>
+{% endblock %}
+
+{% block nav %}<a href="{{url_for('main.dashboard',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-house"></i></div>
+    <div class="ps-4 col-6 grey">Home</div>
+  </div> 
+</a>
+<a href="{{url_for('main.history',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row active">
+    <div class="col-1"><i class="fa-solid icon fa-book"></i></div>
+    <div class="ps-4 col-6 light">History</div>
+  </div>
+</a>
+<a href="{{url_for('main.profile',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 my-1 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-circle-user"></i></div>
+    <div class="ps-4 col-6 grey ">Profile</div>
+  </div>
+</a>
+<a href="{{url_for('main.summary',role=current_user.role, username=current_user.username)}}">
+  <div class="ps-4 p-2 row inactive">
+    <div class="col-1"><i class="fa-solid icon fa-chart-simple"></i></div>
+    <div class="ps-4 col-6 grey ">Summary</div>
+  </div>
+</a>{% endblock %}
+
+
+
+
+{% block mainblock %}
+<h3 class="p-3">Active Registrations</h3>
+  
+  <div class="container text-center">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Lot Location</th>
+          <th scope="col">Vehicle No</th>
+          <th scope="col">Start Time</th>
+          <th scope="col" class="ps-3 me-3">Book</th>
+        </tr>
+      </thead>
+      <tbody>{% for lot in reservation %}
+        {% if lot.status=="occupied" %}
+       
+        <tr>
+          <th scope="row">{{lot.id}}</th>
+          <td>{{dict[lot.id][2].lot_location}}</td>
+          <td>{{lot.vehicle_no}}</td>
+          <td>{{lot.start_time.strftime('%d %b %Y, %I:%M %p') }}</td>
+        <td><a class="btn btn-warning p-2" href="{{url_for('main.release',role=current_user.role, username=current_user.username,reservation_id=lot.id)}}" role="button">Release</a></td>
+      
+         
+        </tr> {% endif %}
+        {% endfor %}
+      </tbody></table>
+
+        <h3 class="p-3 pt-5">Completed Registrations</h3>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Lot Id</th>
+          <th scope="col">Lot Location</th>
+          <th scope="col">Vehicle No</th>
+          <th scope="col">Start Time</th>
+          <th scope="col">End Time</th>
+        </tr>
+      </thead>
+      <tbody>{% for lot in reservation %}
+        {% if lot.status=="released" %}
+       
+        <tr>
+          <th scope="row">{{lot.id}}</th>
+          <td>{{dict[lot.id][2].lot_location}}</td>
+          <td>{{lot.vehicle_no}}</td>
+          <td>{{lot.start_time.strftime('%d %b %Y, %I:%M %p') }}</td>
+          <td>{{lot.end_time.strftime('%d %b %Y, %I:%M %p') }}</td>
+          
+         
+        </tr> {% endif %}
+        {% endfor %}
+      </tbody></table></div>
+{% endblock %}
