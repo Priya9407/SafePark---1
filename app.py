@@ -23,11 +23,11 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Create tables once
 with app.app_context():
     db.create_all()
-   
-    admin = User(
+
+    if not User.query.filter_by(username="admin").first():
+        admin = User(
             name="Admin User",
             email="admin@example.com",
             address="Admin Address",
@@ -35,6 +35,9 @@ with app.app_context():
             pin_code=600129,
             password=generate_password_hash('admin123'),
             role="admin"
-    )
-    db.session.add(admin)
-    db.session.commit() 
+        )
+
+        db.session.add(admin)
+        db.session.commit()
+
+        print("Admin created")
